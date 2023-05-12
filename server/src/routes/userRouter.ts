@@ -13,7 +13,7 @@ import protect from "../middleware/protect.js"
 const userRouter = Router()
 userRouter
   .post("/", registerUser)
-  .post("/login", protect, loginUser)
+  .post("/login", loginUser)
   .delete("/logout", protect, logoutUser)
   .post("/refresh", protect, refreshAccessToken)
   .get("/user", protect, getUser)

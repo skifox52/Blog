@@ -1,13 +1,14 @@
 import { Request, Response } from "express"
 import expressAsyncHandler from "express-async-handler"
 import PostModel, { PostInterface } from "../models/PostModel.js"
+import { Types } from "mongoose"
 
 //||||||||||||||POST CRUD|||||||||||||||||||||||||
 //Get all posts
 export const getPosts = expressAsyncHandler(
   async (req: Request, res: Response): Promise<void> => {
     try {
-      const posts: PostInterface[] = await PostModel.find({})
+      const posts: PostInterface[] = await PostModel.find({}).populate("userId")
       res.status(200).json(posts)
     } catch (error: any) {
       res.status(400)
@@ -37,7 +38,7 @@ export const createPost = expressAsyncHandler(
       const newPost: PostInterface = await PostModel.create({
         title,
         content,
-        userId: req.user?.id,
+        userId: new Types.ObjectId(req.user?.id),
       })
       res.status(201).json("Post created successfully!")
     } catch (error: any) {

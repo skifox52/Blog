@@ -5,7 +5,7 @@ import cors from "cors";
 import ErrorHandler from "./middleware/ErrorHandler.js";
 import compression from "compression";
 import userRouter from "./routes/userRouter.js";
-import postRouter from "./routes/PostRoute.js";
+import postRouter from "./routes/postRoute.js";
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

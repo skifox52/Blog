@@ -7,7 +7,6 @@ const protect = expressAsyncHandler(async (req, res, next) => {
         if (!token)
             throw new Error("No token!");
         const user = jwt.verify(token, process.env.ACCESS_SECRET);
-        console.log(user);
         req.user = user;
         next();
     }

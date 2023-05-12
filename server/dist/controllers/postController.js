@@ -1,10 +1,11 @@
 import expressAsyncHandler from "express-async-handler";
 import PostModel from "../models/PostModel.js";
+import { Types } from "mongoose";
 //||||||||||||||POST CRUD|||||||||||||||||||||||||
 //Get all posts
 export const getPosts = expressAsyncHandler(async (req, res) => {
     try {
-        const posts = await PostModel.find({});
+        const posts = await PostModel.find({}).populate("userId");
         res.status(200).json(posts);
     }
     catch (error) {
@@ -32,7 +33,7 @@ export const createPost = expressAsyncHandler(async (req, res) => {
         const newPost = await PostModel.create({
             title,
             content,
-            userId: req.user?.id,
+            userId: new Types.ObjectId(req.user?.id),
         });
         res.status(201).json("Post created successfully!");
     }

@@ -10,8 +10,9 @@ const PostSchema = new Schema({
     },
     userId: {
         type: Schema.Types.ObjectId,
+        ref: "User",
         required: true,
     },
-});
+}, { timestamps: true });
 const PostModel = model("Post", PostSchema);
 export default PostModel;
