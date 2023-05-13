@@ -1,16 +1,36 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
-import { useAppDispatch } from "../app/hooks"
+import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { logoutUser } from "../features/userSlice"
+import { useLogoutUserApiMutation } from "../api/userApiSlice"
+import { CustomErrorObject } from "../types/customError"
+import { toast } from "react-toastify"
+import { Spinner } from "./Spinner"
 
 export const Navbar: React.FC = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const logout: React.MouseEventHandler<HTMLButtonElement> = () => {
+  const { refreshToken }: { refreshToken: string | null } = useAppSelector(
+    (state) => state.user
+  )
+  const [logoutUserApi, { isLoading, isError, error, isSuccess }] =
+    useLogoutUserApiMutation()
+  const logout: React.MouseEventHandler<HTMLButtonElement> = async () => {
+    const response = (await logoutUserApi({ refreshToken } as {
+      refreshToken: string
+    })) as { data: string }
+    toast.success(response.data)
     dispatch(logoutUser())
     navigate("/login")
   }
+  useEffect(() => {
+    if (isError) {
+      const customError = error as CustomErrorObject
+      toast.error(customError.data.err)
+    }
+  }, [isError, error])
+  if (isLoading) return <Spinner />
   return (
     <div className="navbar bg-slate-950 shadow-md relative z-50 text-gray-100 shadow-indigo-800">
       <div className="flex-1">

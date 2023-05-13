@@ -5,6 +5,7 @@ import { setUser } from "../features/userSlice"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
 import type { CustomErrorObject } from "../types/customError"
+import { Spinner } from "../components/Spinner"
 
 export const Login: React.FC = () => {
   const user = useAppSelector((state) => state.user)
@@ -46,7 +47,7 @@ export const Login: React.FC = () => {
     }
   }, [isError, error, data, isSuccess, dispatch, user.accessToken, navigate])
   if (isLoading) {
-    return <h1>Loading</h1>
+    return <Spinner />
   }
   return (
     <div className="h-screen w-screen bg-slate-950 flex justify-center items-center">
@@ -61,6 +62,7 @@ export const Login: React.FC = () => {
           <input
             name="username"
             type="text"
+            required
             className=" bg-black bg-opacity-50 w-full p-4 text-neutral-100 border border-gray-900 placeholder:text-gray-700"
             placeholder="Username..."
             onChange={onChange}
@@ -69,6 +71,7 @@ export const Login: React.FC = () => {
           <input
             type="password"
             name="password"
+            required
             className=" bg-black bg-opacity-50 w-full p-4 text-neutral-100 border border-gray-900 placeholder:text-gray-700"
             placeholder="Password..."
             onChange={onChange}

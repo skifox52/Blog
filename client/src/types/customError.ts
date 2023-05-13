@@ -4,4 +4,5 @@ export interface CustomErrorObject {
     stack: string
   }
   status: number
+  componentStack?: string
 }
