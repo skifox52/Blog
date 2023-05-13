@@ -8,7 +8,10 @@ import { Types } from "mongoose"
 export const getPosts = expressAsyncHandler(
   async (req: Request, res: Response): Promise<void> => {
     try {
-      const posts: PostInterface[] = await PostModel.find({}).populate("userId")
+      const posts: PostInterface[] = await PostModel.find({}).populate({
+        path: "userId",
+        select: "-password-_id",
+      })
       res.status(200).json(posts)
     } catch (error: any) {
       res.status(400)

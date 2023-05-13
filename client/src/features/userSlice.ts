@@ -25,7 +25,13 @@ const userSlice = createSlice({
         })
       )
     },
+    logoutUser: (state) => {
+      localStorage.removeItem("User")
+      state._id = null
+      state.accessToken = null
+      state.refreshToken = null
+    },
   },
 })
-export const { setUser } = userSlice.actions
+export const { setUser, logoutUser } = userSlice.actions
 export default userSlice.reducer

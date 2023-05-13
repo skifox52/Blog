@@ -5,7 +5,10 @@ import { Types } from "mongoose";
 //Get all posts
 export const getPosts = expressAsyncHandler(async (req, res) => {
     try {
-        const posts = await PostModel.find({}).populate("userId");
+        const posts = await PostModel.find({}).populate({
+            path: "userId",
+            select: "-password-_id",
+        });
         res.status(200).json(posts);
     }
     catch (error) {

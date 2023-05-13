@@ -17,7 +17,7 @@ export const postApiSlice = createApi({
   endpoints: (builder) => ({
     fetchPosts: builder.query<postInterface[], []>({
       query: () => ({
-        url: "/",
+        url: "/all",
       }),
     }),
   }),

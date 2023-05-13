@@ -1,7 +1,16 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { useAppDispatch } from "../app/hooks"
+import { logoutUser } from "../features/userSlice"
 
 export const Navbar: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const logout: React.MouseEventHandler<HTMLButtonElement> = () => {
+    dispatch(logoutUser())
+    navigate("/login")
+  }
   return (
     <div className="navbar bg-slate-950 shadow-md relative z-50 text-gray-100 shadow-indigo-800">
       <div className="flex-1">
@@ -14,43 +23,53 @@ export const Navbar: React.FC = () => {
       </div>
       <div className="flex-none gap-2">
         <div className=" from-control mx-4 relative  after:absolute after:h-[1px] after:w-0 after:bottom-0 after:bg-white after:left-0 hover:after:w-full after:transition-all duration-300 ">
+          <label htmlFor="my-modal-4" className="cursor-pointer">
+            Add post
+          </label>
+          <input type="checkbox" id="my-modal-4" className="modal-toggle" />
+          <label
+            htmlFor="my-modal-4"
+            className="modal cursor-pointer bg-slate-950 bg-opacity-90"
+          >
+            <label className="modal-box bg-slate-950 shadow-indigo-800 border border-gray-700 shadow-lg relative">
+              <h3 className="text-3xl font-semibold ">Add a post</h3>
+              <form className="mt-8 flex flex-col gap-4">
+                <input
+                  type="text"
+                  name="title"
+                  required
+                  className="input text-[18px] placeholder:text-gray-500 input-md w-full bg-transparent border border-gray-700"
+                  placeholder="Title..."
+                />
+                <textarea
+                  name="content"
+                  required
+                  placeholder="Content..."
+                  className=" textarea h-24 text-[18px] placeholder:text-gray-500 input-md w-full bg-transparent border border-gray-700"
+                ></textarea>
+                <button
+                  type="submit"
+                  className="bg-transparent border border-gray-800 px-4 py-2 rounded-lg shadow-md shadow-indigo-800 hover:shadow-none hover:translate-y-[1px] font-semibold"
+                >
+                  Submit
+                </button>
+              </form>
+            </label>
+          </label>
+        </div>
+        <div className=" from-control mx-4 relative  after:absolute after:h-[1px] after:w-0 after:bottom-0 after:bg-white after:left-0 hover:after:w-full after:transition-all duration-300 ">
+          <Link to={"/myPosts"}>My posts</Link>
+        </div>
+        <div className=" from-control mx-4 relative  after:absolute after:h-[1px] after:w-0 after:bottom-0 after:bg-white after:left-0 hover:after:w-full after:transition-all duration-300 ">
           <Link to={"/profile"}>Profile</Link>
         </div>
         <div className=" from-control mx-4">
-          <button className=" bg-black border border-gray-800 px-4 py-2 rounded-lg shadow-md shadow-indigo-800 hover:shadow-none hover:translate-y-[1px]">
+          <button
+            onClick={logout}
+            className="bg-transparent border border-gray-800 px-4 py-2 rounded-lg shadow-md shadow-indigo-800 hover:shadow-none hover:translate-y-[1px]"
+          >
             Logout
           </button>
-        </div>
-        <div className="form-control">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="input  input-bordered border-gray-800 bg-transparent"
-          />
-        </div>
-        <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-            <div className="w-10 rounded-full">
-              <img src="https://st3.depositphotos.com/1767687/16607/v/600/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg" />
-            </div>
-          </label>
-          <ul
-            tabIndex={0}
-            className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
-          >
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
