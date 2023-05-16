@@ -144,7 +144,13 @@ export const updateUser = expressAsyncHandler(
   async (req: Request, res: Response): Promise<void> => {
     try {
       const data: Omit<UserSchemaInterface, "_id"> = req.body
-      await UserModel.findByIdAndUpdate(req.user?.id, data)
+      const { password } = req.body
+      let hashedPassword: string = ""
+      if (password) hashedPassword = await bcrypt.hash(password, 10)
+      await UserModel.findByIdAndUpdate(req.user?.id, {
+        ...data,
+        password: hashedPassword,
+      })
       res.status(200).json("User updated successfully!")
     } catch (error: any) {
       res.status(400)

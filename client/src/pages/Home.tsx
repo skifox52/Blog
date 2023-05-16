@@ -9,7 +9,9 @@ import { Spinner } from "../components/Spinner"
 
 export const Home: React.FC = () => {
   const navigate = useNavigate()
-  const token: string | null = useAppSelector((state) => state.user.accessToken)
+  const token: string | null = useAppSelector(
+    (state) => state.user?.accessToken
+  )
   const { data, isLoading, isError, error, isSuccess } = useFetchPostsQuery([])
   useEffect(() => {
     if (!token) navigate("/login")

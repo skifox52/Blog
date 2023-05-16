@@ -15,6 +15,6 @@ export interface postInterface {
     createdAt: string
     updatedAt: string
   }
-  createdAt: Date
-  updatedAt: Date
+  createdAt?: Date
+  updatedAt?: Date
 }

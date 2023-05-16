@@ -13,12 +13,17 @@ export const userApiSlice = createApi({
         userInterface,
         "accessToken"
       >
-      if (endpoint === "logoutUserApi") {
+      if (
+        endpoint === "logoutUserApi" ||
+        endpoint === "fetchUser" ||
+        endpoint === "updateUser"
+      ) {
         headers.set("Authorization", `Bearer ${token}`)
       }
       return headers
     },
   }),
+  tagTypes: ["User"],
   endpoints: (builder) => ({
     loginUser: builder.mutation({
       query: (data: { username: string; password: string }) => ({
@@ -34,7 +39,34 @@ export const userApiSlice = createApi({
         body: { refreshToken: data.refreshToken },
       }),
     }),
+    fetchUser: builder.query({
+      query: () => ({
+        url: "/user",
+      }),
+      providesTags: ["User"],
+    }),
+    updateUser: builder.mutation({
+      query: (userBody) => ({
+        url: "/user",
+        method: "PUT",
+        body: userBody,
+      }),
+      invalidatesTags: ["User"],
+    }),
+    postUser: builder.mutation({
+      query: (data: { username: string; password: string }) => ({
+        url: "/",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 })
 
-export const { useLoginUserMutation, useLogoutUserApiMutation } = userApiSlice
+export const {
+  useLoginUserMutation,
+  useLogoutUserApiMutation,
+  useFetchUserQuery,
+  useUpdateUserMutation,
+  usePostUserMutation,
+} = userApiSlice

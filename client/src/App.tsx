@@ -10,12 +10,16 @@ import { Login } from "./pages/Login"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/ReactToastify.css"
 import { Home } from "./pages/Home"
+import { Profile } from "./pages/Profile"
+import { Posts } from "./pages/Posts"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/posts" element={<Posts />} />
       <Route path="/*" element={<Navigate to={"/"} />} />
     </Route>
   )

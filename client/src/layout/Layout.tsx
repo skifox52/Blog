@@ -6,7 +6,7 @@ export const Layout: React.FC = () => {
   const location = useLocation()
   return (
     <div className=" min-h-screen min-w-screen bg-slate-950">
-      {location.pathname === "/" && <Navbar />}
+      {location.pathname !== "/login" && <Navbar />}
       <div>
         <Outlet />
       </div>
